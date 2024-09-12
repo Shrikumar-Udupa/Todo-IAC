@@ -15,3 +15,30 @@ variable "zg628t-todo-azs" {
  description = "Availability Zones"
  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
 }
+
+variable "zg628t-todo-eks-cluster-allowed-ports" {
+  description = "List of allowed ports"
+  type        = list(number)
+  default     = [80, 443, 6443, 2379, 2380, 10250, 10259, 10257, 53] # Kubernetes default ports
+}
+
+variable "zg628t-todo-eks-worker-allowed-ports" {
+  description = "List of allowed ports"
+  type        = list(number)
+  default     = [10250, 10256, 53] # Kubernetes default ports
+}
+
+variable "zg628t-todo-eks-cluster-allowed-cidr" {
+  description = "List of allowed CIDR blocks"
+  type        = list(string)
+  default     = ["0.0.0.0/0"] # Change to restrict access as needed
+}
+
+variable "zg628t-todo-eks-worker-allowed-node-ports" {
+  description = "Map for NodePort range"
+  type        = map(number)
+  default     = {
+    from = 30000
+    to   = 32767
+  }
+}

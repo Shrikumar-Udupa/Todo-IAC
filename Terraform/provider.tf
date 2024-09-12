@@ -25,3 +25,15 @@ provider "aws" {
 
 
 
+data "aws_eks_cluster_auth" "zg628t-todo-eks-cluster-auth" {
+  depends_on = [aws_eks_cluster.zg628t-todo-eks-cluster]
+  name       = aws_eks_cluster.zg628t-todo-eks-cluster.name
+}
+
+provider "helm" {
+  kubernetes {
+    host                   = aws_eks_cluster.zg628t-todo-eks-cluster.endpoint
+    cluster_ca_certificate = base64decode(aws_eks_cluster.zg628t-todo-eks-cluster.certificate_authority[0].data)
+    token                  = data.aws_eks_cluster_auth.zg628t-todo-eks-cluster-auth.token
+  }
+}

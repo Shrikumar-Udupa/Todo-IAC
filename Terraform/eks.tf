@@ -25,7 +25,7 @@ resource "aws_iam_role_policy_attachment" "zg628t-todo-AmazonEKSClusterPolicy" {
 
 
 resource "aws_eks_cluster" "zg628t-todo-eks-cluster" {
-  name     = "g628t-todo-eks-cluster"
+  name     = "zg628t-todo-eks-cluster"
   role_arn = aws_iam_role.zg628t-todo-eks-role.arn
   vpc_config {
     subnet_ids = [for subnet in aws_subnet.zg628t-todo-private-subnet : subnet.id]

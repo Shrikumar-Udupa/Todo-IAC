@@ -105,27 +105,34 @@ resource "aws_security_group" "zg628t-todo-eks-cluster-sg" {
   name        = "zg628t-todo-eks-cluster-sg"
   description = "Cluster communication with worker nodes"
   vpc_id      = aws_vpc.zg628t-todo-vpc.id
+
+  # Allow inbound traffic for specified ports
+  dynamic "ingress" {
+    for_each = var.zg628t-todo-eks-cluster-allowed-ports
+    content {
+      description = "Allow traffic on port ${ingress.value}"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = var.zg628t-todo-eks-cluster-allowed-cidr
+    }
+  }
+
+  # Allow all outbound traffic
+  egress {
+    description = "Allow all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "zg628t-todo-eks-cluster-sg"
+  }
 }
 
-resource "aws_security_group_rule" "zg628t-todo-eks-cluster-inbound-sgr" {
-  description              = "Allow worker nodes to communicate with the cluster API Server"
-  from_port                = 443
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.zg628t-todo-eks-cluster-sg.id
-  source_security_group_id = aws_security_group.zg628t-todo-eks-worker-sg.id
-  to_port                  = 443
-  type                     = "ingress"
-}
 
-resource "aws_security_group_rule" "zg628t-todo-eks-cluster_outbound-sgr" {
-  description              = "Allow cluster API Server to communicate with the worker nodes"
-  from_port                = 1024
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.zg628t-todo-eks-cluster-sg.id
-  source_security_group_id = aws_security_group.zg628t-todo-eks-worker-sg.id
-  to_port                  = 65535
-  type                     = "egress"
-}
 
 
 # EKS Node Security Group
@@ -133,6 +140,27 @@ resource "aws_security_group" "zg628t-todo-eks-worker-sg" {
   name        = "zg628t-todo-eks-worker-sg"
   description = "Security group for all nodes in the cluster"
   vpc_id      = aws_vpc.zg628t-todo-vpc.id
+
+ # Dynamic block to allow inbound traffic for specified ports
+  dynamic "ingress" {
+    for_each = var.zg628t-todo-eks-worker-allowed-ports
+    content {
+      description = "Allow traffic on port ${ingress.value}"
+      from_port   = ingress.value
+      to_port     = ingress.value
+      protocol    = "tcp"
+      cidr_blocks = var.zg628t-todo-eks-cluster-allowed-cidr
+    }
+  }
+
+  # Ingress rule to allow inbound traffic for the NodePort range (30000-32767)
+  ingress {
+    description = "Allow NodePort services"
+    from_port   = var.zg628t-todo-eks-worker-allowed-node-ports["from"]
+    to_port     = var.zg628t-todo-eks-worker-allowed-node-ports["to"]
+    protocol    = "tcp"
+    cidr_blocks = var.zg628t-todo-eks-cluster-allowed-cidr
+  }
 
   egress {
     from_port   = 0
@@ -142,32 +170,4 @@ resource "aws_security_group" "zg628t-todo-eks-worker-sg" {
   }
 }
 
-resource "aws_security_group_rule" "zg628t-todo-eks-worker-internal-sgr" {
-  description              = "Allow nodes to communicate with each other"
-  from_port                = 0
-  protocol                 = "-1"
-  security_group_id        = aws_security_group.zg628t-todo-eks-worker-sg.id
-  source_security_group_id = aws_security_group.zg628t-todo-eks-worker-sg.id
-  to_port                  = 65535
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "zg628t-todo-eks-worker-pod-inbound-sgr" {
-  description              = "Allow worker Kubelets and pods to receive communication from the cluster control plane"
-  from_port                = 1025
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.zg628t-todo-eks-worker-sg.id
-  source_security_group_id = aws_security_group.zg628t-todo-eks-cluster-sg.id
-  to_port                  = 65535
-  type                     = "ingress"
-}
-
-resource "aws_security_group_rule" "nodzg628t-todo-eks-worker-pod-outbound-sgr" {
-  description              = "Allow worker Kubelets and pods to receive communication from the cluster control plane"
-  from_port                = 1025
-  protocol                 = "tcp"
-  security_group_id        = aws_security_group.zg628t-todo-eks-worker-sg.id
-  source_security_group_id = aws_security_group.zg628t-todo-eks-cluster-sg.id
-  to_port                  = 65535
-  type                     = "egress"
-}
+r
