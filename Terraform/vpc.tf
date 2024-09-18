@@ -19,6 +19,7 @@ resource "aws_subnet" "zg628t-todo-public-subnet" {
  vpc_id     = aws_vpc.zg628t-todo-vpc.id
  cidr_block = element(var.zg628t-todo-public-subnet-cidrs, count.index)
  availability_zone = element(var.zg628t-todo-azs, count.index)
+ map_public_ip_on_launch = true
  
  tags = {
    Name = "zg628t-todo-public-subnet-${count.index + 1}"

@@ -28,9 +28,14 @@ resource "aws_eks_cluster" "zg628t-todo-eks-cluster" {
   name     = "zg628t-todo-eks-cluster"
   role_arn = aws_iam_role.zg628t-todo-eks-role.arn
   vpc_config {
-    subnet_ids = [for subnet in aws_subnet.zg628t-todo-private-subnet : subnet.id]
+    subnet_ids = [for subnet in aws_subnet.zg628t-todo-public-subnet : subnet.id]
     security_group_ids      = [aws_security_group.zg628t-todo-eks-cluster-sg.id, aws_security_group.zg628t-todo-eks-worker-sg.id]
   }
+  access_config {
+    authentication_mode                         = "API_AND_CONFIG_MAP"
+    bootstrap_cluster_creator_admin_permissions = true
+  }
+
 
   depends_on = [aws_iam_role_policy_attachment.zg628t-todo-AmazonEKSClusterPolicy]
 }
@@ -71,8 +76,8 @@ resource "aws_eks_node_group" "g628t-todo-eks-worker-node-group" {
   cluster_name  = aws_eks_cluster.zg628t-todo-eks-cluster.name
   node_group_name = "g628t-todo-eks-worker-node-group"
   node_role_arn  = aws_iam_role.zg628t-todo-nodes-group-role.arn
-  count    = length(aws_subnet.zg628t-todo-private-subnet)
-  subnet_ids   = [for subnet in aws_subnet.zg628t-todo-private-subnet : subnet.id]
+  count    = length(aws_subnet.zg628t-todo-public-subnet)
+  subnet_ids   = [for subnet in aws_subnet.zg628t-todo-public-subnet : subnet.id]
   instance_types = ["t3.xlarge"]
  
   scaling_config {

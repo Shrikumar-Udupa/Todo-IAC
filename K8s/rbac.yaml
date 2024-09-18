@@ -2,31 +2,26 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
-  # "namespace" omitted since ClusterRoles are not namespaced
   name: g628t-todo-eks-developer-role
 rules:
 - apiGroups: [""]
-  # at the HTTP level, the name of the resource for accessing Secret
-  # objects is "secrets"
   resources: ["configmaps", "pods", "secrets", "services"]
   verbs: ["get", "watch", "list"]
 - apiGroups: ["apps"]
-  # at the HTTP level, the name of the resource for accessing Secret
-  # objects is "secrets"
   resources: ["deployments", "replicasets", "daemonsets", "ingresses"]
   verbs: ["get", "watch", "list"]
 
+---
 
 apiVersion: rbac.authorization.k8s.io/v1
-# This cluster role binding allows anyone in the "manager" group to read secrets in any namespace.
 kind: ClusterRoleBinding
 metadata:
   name: g628t-todo-eks-developer-rolebinding
 subjects:
 - kind: Group
-  name: g628t-todo-eks-developer-group # Name is case sensitive
+  name: g628t-todo-eks-developer-group  # The name of the group in your IAM or identity provider
   apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: ClusterRole
-  name: g628t-todo-eks-developer-role
+  name: g628t-todo-eks-developer-role  # Reference to the ClusterRole created above
   apiGroup: rbac.authorization.k8s.io
