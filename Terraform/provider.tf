@@ -23,7 +23,11 @@ provider "aws" {
 }
 
 
-
+provider "kubernetes" {
+  host                   = aws_eks_cluster.g628t-todo-eks-cluster.endpoint
+  cluster_ca_certificate = base64decode(aws_eks_cluster.g628t-todo-eks-cluster.certificate_authority.0.data)
+  token                  = data.aws_eks_cluster_auth.g628t-todo-eks-cluster.token
+}
 
 data "aws_eks_cluster_auth" "zg628t-todo-eks-cluster-auth" {
   depends_on = [aws_eks_cluster.zg628t-todo-eks-cluster]
