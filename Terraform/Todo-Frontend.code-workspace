@@ -1,0 +1,14 @@
+{
+	"folders": [
+		{
+			"path": "../../Todo-Frontend"
+		},
+		{
+			"path": "../../Todo-Backend"
+		},
+		{
+			"path": ".."
+		}
+	],
+	"settings": {}
+}

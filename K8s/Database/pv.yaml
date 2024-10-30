@@ -1,0 +1,13 @@
+vapiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: mongo-pv
+  namespace: prod
+spec:
+  capacity: 
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /data/db

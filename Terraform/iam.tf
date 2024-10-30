@@ -190,7 +190,7 @@ resource "aws_iam_group_policy" "g628t-todo-eks-admin-assume-role" {
 resource "aws_eks_access_entry" "g628t-todo-eks-admin-access-entry" {
   cluster_name      = aws_eks_cluster.zg628t-todo-eks-cluster.name
   principal_arn     = aws_iam_role.g628t-todo-eks-admin-role.arn #user-iam-arn
-  kubernetes_groups = [g628t-todo-eks-admin-group]
+  kubernetes_groups = ["g628t-todo-eks-admin-group"]
   type              = "STANDARD"
 }
 

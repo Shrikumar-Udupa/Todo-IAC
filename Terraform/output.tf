@@ -6,3 +6,4 @@ output "g628t_todo_eks_argocd_server_url" {
     "LoadBalancer not available yet"
   )
 }
+
