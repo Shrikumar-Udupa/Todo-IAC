@@ -171,4 +171,3 @@ resource "aws_security_group" "zg628t-todo-eks-worker-sg" {
   }
 }
 
-r

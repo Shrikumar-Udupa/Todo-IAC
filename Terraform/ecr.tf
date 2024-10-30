@@ -1,4 +1,4 @@
-vvv
+
 # Create ECR repositories using a loop
 resource "aws_ecr_repository" "repositories" {
   for_each            = toset(var.ecr_repositories)  # Converts the list to a set for unique values
