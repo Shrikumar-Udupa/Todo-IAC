@@ -27,8 +27,10 @@ spec:
       - name: frontend
         image: 825765396418.dkr.ecr.us-east-1.amazonaws.com/todo-frontend
         securityContext:
-          runAsNonRoot: true
-          runAsUser: 1000
+          seccompProfile:
+            type: RuntimeDefault 
+          runAsNonRoot: true  # Ensure the container runs as a non-root user
+          runAsUser: 1000     # Specify a non-root UID
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
           capabilities:

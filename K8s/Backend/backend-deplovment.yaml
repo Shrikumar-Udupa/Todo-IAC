@@ -27,11 +27,14 @@ spec:
       - name: api
         image: 825765396418.dkr.ecr.us-east-1.amazonaws.com/todo-backend    
         securityContext:
+          seccompProfile:
+            type: RuntimeDefault 
           runAsNonRoot: true  # Ensure the container runs as a non-root user
           runAsUser: 1000     # Specify a non-root UID
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
-
+          capabilities:
+            drop: ["ALL"]
         imagePullPolicy: Always
         env:
           - name: MONGO_CONN_STR

@@ -14,16 +14,18 @@ spec:
         app: mongodb
     spec: 
       containers:
-      - name: mon
-        image: mongo:4.4.6
+      - name: mongodb
+        image: mongo
         command:
             - "numactl"
             - "--interleave=all"
             - "mongod"
             - "--wiredTigerCacheSizeGB"
-            - "0.1"
+            - "0.25"
             - "--bind_ip"
             - "0.0.0.0"
+            - "--unixSocketPrefix"
+            - "/data/db"
         ports:
         - containerPort: 27017
         env: 
@@ -38,9 +40,12 @@ spec:
                 name: mongo-sec
                 key: password
         securityContext:
+          seccompProfile:
+            type: RuntimeDefault  # Set seccomp profile to meet PodSecurity requirements
           readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1000
+          allowPrivilegeEscalation: false
           capabilities:
             drop: ["ALL"]
             add: ["NET_BIND_SERVICE"]
