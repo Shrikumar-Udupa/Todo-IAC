@@ -17,8 +17,6 @@ spec:
       - name: mongodb
         image: mongo
         command:
-            - "numactl"
-            - "--interleave=all"
             - "mongod"
             - "--wiredTigerCacheSizeGB"
             - "0.25"
