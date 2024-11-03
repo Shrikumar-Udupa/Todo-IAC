@@ -1,9 +1,10 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: StatefulSet
 metadata: 
   namespace: prod
   name: mongodb
 spec: 
+  serviceName: "mongo-svc"
   replicas: 1
   selector:
     matchLabels:
@@ -17,13 +18,13 @@ spec:
       - name: mongodb
         image: mongo
         command:
-            - "mongod"
-            - "--wiredTigerCacheSizeGB"
-            - "0.25"
-            - "--bind_ip"
-            - "0.0.0.0"
-            - "--unixSocketPrefix"
-            - "/data/db"
+          - "mongod"
+          - "--wiredTigerCacheSizeGB"
+          - "0.25"
+          - "--bind_ip"
+          - "0.0.0.0"
+          - "--unixSocketPrefix"
+          - "/data/db"
         ports:
         - containerPort: 27017
         env: 
@@ -39,7 +40,7 @@ spec:
                 key: password
         securityContext:
           seccompProfile:
-            type: RuntimeDefault  # Set seccomp profile to meet PodSecurity requirements
+            type: RuntimeDefault
           readOnlyRootFilesystem: true
           runAsNonRoot: true
           runAsUser: 1000
@@ -55,10 +56,14 @@ spec:
             memory: "1Gi"
             cpu: "500m"
         volumeMounts:
-          - name: mongo-volume
+          - name: mongo-data
             mountPath: /data/db
-      volumes: 
-      - name: mongo-volume
-        persistentVolumeClaim:
-          claimName: mongo-volume-claim
-  
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-data
+    spec:
+      accessModes: ["ReadWriteOnce"]
+      storageClassName: "ebs-sc"
+      resources:
+        requests:
+          storage: 1Gi
