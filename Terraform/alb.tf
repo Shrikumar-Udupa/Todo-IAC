@@ -15,7 +15,7 @@ resource "aws_iam_openid_connect_provider" "zg628t-todo-eks-cluster-openid" {
 
 
 
-resource "aws_iam_policy" "g628t_todo_eks_alb_policy" {
+resource "aws_iam_policy" "g628t-todo-eks-alb-policy" {
   name   = "AWSLoadBalancerController"
   policy = jsonencode({
     "Version" : "2012-10-17",
@@ -291,7 +291,6 @@ resource "aws_iam_role_policy_attachment" "g628t-todo-eks-ingress-iam-attach" {
   role = aws_iam_role.g628t-todo-eks-ingress-role.name
   policy_arn = aws_iam_policy.g628t-todo-eks-alb-policy.arn
 }
-
 
 resource "helm_release" "zg628t-todo-eks-load-balancer-controller"{
   depends_on = [aws_eks_cluster.zg628t-todo-eks-cluster]
