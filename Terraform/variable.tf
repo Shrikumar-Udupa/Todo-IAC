@@ -44,7 +44,7 @@ variable "zg628t-todo-eks-worker-allowed-node-ports" {
 }
 
 # List of ECR repository names
-variable "ecr_repositories" {
+variable "ecr-repositories" {
   type    = list(string)
   default = ["todo-frontend", "todo-backend"]
 }
