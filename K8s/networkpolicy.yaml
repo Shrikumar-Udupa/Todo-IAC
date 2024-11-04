@@ -12,8 +12,9 @@ spec:
   - Egress
   ingress:
   - from:
-    - ipBlock:
-        cidr: <ALB_IP_RANGE_CIDR>  # Replace with the CIDR range of the ALB
+    - namespaceSelector:
+        matchLabels: 
+          name: prod  # Replace with the CIDR range of the ALB
     ports:
     - protocol: TCP
       port: 3000  # Specify the frontend's listening port (e.g., 3000)
