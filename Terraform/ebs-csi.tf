@@ -28,6 +28,6 @@ resource "aws_iam_role_policy_attachment" "g628t-todo-eks-ebs-csidriver-iam-atta
 resource "aws_eks_addon" "g628t-todo-eks-ebs-csidriver" {
   cluster_name                = aws_eks_cluster.zg628t-todo-eks-cluster.name
   addon_name                  = "aws-ebs-csi-driver"
-  addon_version               = "v1.19.0-eksbuild.2" #e.g., previous version v1.9.3-eksbuild.3 and the new version is v1.10.1-eksbuild.1
+  addon_version               = "v1.36.0-eksbuild.1" #e.g., previous version v1.9.3-eksbuild.3 and the new version is v1.10.1-eksbuild.1
   service_account_role_arn    = aws_iam_role.g628t-todo-eks-ebs-csidriver-role.arn
 }
