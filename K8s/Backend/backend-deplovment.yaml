@@ -48,7 +48,7 @@ spec:
           - name: MONGO_CONN_STR
             valueFrom:
               secretKeyRef:
-                name: mongodb-conn-secret
+                name: mongo-connection-sec
                 key: MONGO_CONN_STR
           - name: MONGO_USERNAME
             valueFrom:
