@@ -22,7 +22,7 @@ jobs:
         frameworks: nsa
         severityThreshold: high
         failedThreshold: 80
-        extra_args: "--verbose"  # Optional for verbose output
+        args: "--verbose"  # Optional for verbose output
         files: "K8s/*.yaml"  
     - name: Upload Kubescape scan results to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v3  # Updated to v3
