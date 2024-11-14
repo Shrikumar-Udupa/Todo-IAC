@@ -41,7 +41,7 @@ resource "aws_subnet" "zg628t-todo-private-subnet" {
 
 # Nat gateway
 resource "aws_eip" "g628t-todo-eip" {
-  domain = true
+  domain   = "vpc"
 
   tags = {
     Name = "g628t-todo-eip"

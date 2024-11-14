@@ -32,12 +32,12 @@ spec:
           - name: MONGO_INITDB_ROOT_USERNAME
             valueFrom:
               secretKeyRef:
-                name: mongo-sec
+                name: mongo-user-sec
                 key: username
           - name: MONGO_INITDB_ROOT_PASSWORD
             valueFrom:
               secretKeyRef:
-                name: mongo-sec
+                name: mongo-user-sec
                 key: password
         securityContext:
           seccompProfile:
@@ -47,8 +47,8 @@ spec:
           runAsUser: 1000
           allowPrivilegeEscalation: false
           capabilities:
-            drop: ["ALL"]
             add: ["NET_BIND_SERVICE"]
+            drop: ["ALL"]
         resources:
           requests:
             memory: "512Mi"

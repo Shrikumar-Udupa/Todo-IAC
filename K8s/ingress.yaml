@@ -6,7 +6,7 @@ metadata:
   annotations:
     alb.ingress.kubernetes.io/scheme: internet-facing
     alb.ingress.kubernetes.io/target-type: ip
-    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}]'
+    alb.ingress.kubernetes.io/listen-ports: '[{"HTTP": 80}, {"HTTPS": 443}]'
     alb.ingress.kubernetes.io/subnets: "subnet-048b6863c43edf669,subnet-0108fbc2b7c936e69,subnet-0c1e64e7962d609db"
 spec:
   ingressClassName: alb
@@ -49,3 +49,7 @@ spec:
                 name: frontend
                 port:
                   number: 3000
+  tls:
+    - hosts:
+        - todo-app.local
+      secretName: todo-tls-secret

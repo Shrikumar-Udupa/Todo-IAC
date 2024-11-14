@@ -4,9 +4,7 @@ resource "helm_release" "g628t-todo-eks-argocd" {
  repository = "https://argoproj.github.io/argo-helm"
  chart      = "argo-cd"
  version    = "5.21.1"
-
  namespace = "argocd"
-
  create_namespace = true
  timeout = 6000 
  set {

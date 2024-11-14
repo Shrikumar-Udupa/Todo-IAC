@@ -2,3 +2,4 @@
 *.log
 pv.yaml
 pvc.yaml
+*.json

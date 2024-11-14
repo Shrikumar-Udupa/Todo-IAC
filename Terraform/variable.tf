@@ -19,7 +19,8 @@ variable "zg628t-todo-azs" {
 variable "zg628t-todo-eks-cluster-allowed-ports" {
   description = "List of allowed ports"
   type        = list(number)
-  default     = [80, 443, 6443, 2379, 2380, 10250, 10259, 10257, 53] # Kubernetes default ports
+#  default     = [80, 443, 6443, 2379, 2380, 10250, 10259, 10257, 53, 3000, 3500, 27017] # Kubernetes default ports
+  default     = [80, 443, 3000, 3500] # Kubernetes default ports
 }
 
 variable "zg628t-todo-eks-worker-allowed-ports" {
