@@ -23,7 +23,7 @@ jobs:
         severityThreshold: high
         failedThreshold: 80
         extra_args: "-v"  # Optional for verbose output
-        files: "**/*.yaml"  
+#        files: "**/*.yaml"  
     - name: Upload Kubescape scan results to GitHub Code Scanning
       uses: github/codeql-action/upload-sarif@v3  # Updated to v3
       with:
