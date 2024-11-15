@@ -66,6 +66,13 @@ spec:
           volumeMounts:
             - name: mongo-data
               mountPath: /data/db
+          securityContext:
+            seccompProfile:
+              type: RuntimeDefault
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+            allowPrivilegeEscalation: false
   
   volumeClaimTemplates:
   - metadata:
