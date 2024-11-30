@@ -11,7 +11,7 @@ metadata:
 spec:
   ingressClassName: alb
   rules:
-    - host: *.us-east-1.elb.amazonaws.com
+    - host: k8s-prod-todoalb-13bc288c35-728225134.us-east-1.elb.amazonaws.com
       http:
         paths:
           - path: /api
