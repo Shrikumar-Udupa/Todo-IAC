@@ -25,7 +25,7 @@ spec:
       - name: ecr-registry-secret
       containers:
       - name: frontend
-        image: 825765396418.dkr.ecr.us-east-1.amazonaws.com/todo-frontend
+        image: 825765396418.dkr.ecr.us-east-1.amazonaws.com/todo-frontend:55
         securityContext:
           seccompProfile:
             type: RuntimeDefault 
