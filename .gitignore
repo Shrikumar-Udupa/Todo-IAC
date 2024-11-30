@@ -3,3 +3,4 @@
 pv.yaml
 pvc.yaml
 *.json
+*.txt

@@ -205,8 +205,8 @@ resource "aws_eks_access_policy_association" "g628t-todo-eks-admin-access-associ
 }
 
 #aws configure
-#aws sts assume-role --role-arn "arn:aws:iam::123456789012:role/example-role" --role-session-name AWSCLI-Session
+#aws sts assume-role --role-arn "arn:aws:iam::825765396418:role/g628t-todo-eks-admin-role" --role-session-name AWSCLI-Session
 #export AWS_ACCESS_KEY_ID=RoleAccessKeyID
 #export AWS_SECRET_ACCESS_KEY=RoleSecretKey
 #export AWS_SESSION_TOKEN=RoleSessionToken
-#aws eks update-kubeconfig --region region-code --name my-cluster
+#aws eks update-kubeconfig --region us-east-1 --name zg628t-todo-eks-cluster
