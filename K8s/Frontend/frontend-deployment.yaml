@@ -6,7 +6,7 @@ metadata:
   labels:
     role: frontend
     env: demo
-spec: 
+spec:
   replicas: 1
   strategy:
     type: RollingUpdate
@@ -14,13 +14,13 @@ spec:
       maxSurge: 1
       maxUnavailable: 25%
   selector:
-    matchLabels: 
+    matchLabels:
       role: frontend
   template:
     metadata:
       labels:
         role: frontend
-    spec: 
+    spec:
       imagePullSecrets:
       - name: ecr-registry-secret
       containers:
@@ -29,8 +29,8 @@ spec:
         securityContext:
           seccompProfile:
             type: RuntimeDefault 
-          runAsNonRoot: true  # Ensure the container runs as a non-root user
-          runAsUser: 1000     # Specify a non-root UID
+          runAsNonRoot: true
+          runAsUser: 1000
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
           capabilities:
@@ -43,14 +43,15 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "250m"
-        resources:
-          requests:
-            memory: "256Mi"
-            cpu: "100m"
         imagePullPolicy: Always
         env:
           - name: REACT_APP_BACKEND_URL
             value: "http://k8s-prod-todoalb-13bc288c35-971375295.us-east-1.elb.amazonaws.com/api/tasks"
         ports:
         - containerPort: 3000
-
+        volumeMounts:
+          - mountPath: /app
+            name: app-dir
+      volumes:
+        - name: app-dir
+          emptyDir: {}
