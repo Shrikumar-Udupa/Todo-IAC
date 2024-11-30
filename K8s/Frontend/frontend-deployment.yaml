@@ -25,7 +25,7 @@ spec:
       - name: ecr-registry-secret
       containers:
       - name: frontend
-        image: 825765396418.dkr.ecr.us-east-1.amazonaws.com/todo-frontend:55
+        image: 825765396418.dkr.ecr.us-east-1.amazonaws.com/todo-frontend
         securityContext:
           seccompProfile:
             type: RuntimeDefault 
@@ -50,7 +50,7 @@ spec:
         imagePullPolicy: Always
         env:
           - name: REACT_APP_BACKEND_URL
-            value: "http://k8s-prod-todoalb-13bc288c35-848775914.us-east-1.elb.amazonaws.com/api/tasks"
+            value: "http://k8s-prod-todoalb-13bc288c35-971375295.us-east-1.elb.amazonaws.com/api/tasks"
         ports:
         - containerPort: 3000
 
